@@ -4,7 +4,7 @@ function NoMatch(props) {
     return (
         <div 
         className="NoMatch">
-            404, 
+            404 , 
         </div>
     );
 }
