@@ -9,18 +9,29 @@ class Jeopardy extends React.Component {
         super(props);
         this.client = new JeopardyService();
         this.state = {
-            data: {},
+            data: [],
             score: 0,
             formData: { userAnswer: '' },
             catagorydata: 0,
+            choice: null
         }
     }
+
+    handleChoice=(event) => {
+        
+        this.setState({
+            choice: event.target.id
+
+        }) 
+
+    }
+
     //get a new random question from the API and add it to the data object in state
     getNewQuestion() {
         return this.client.getQuestion().then(result => {
             console.log(result)
             this.setState({
-                data: result.data[0]
+                data: result.data
             })
         })
     }
@@ -49,10 +60,10 @@ class Jeopardy extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-        if (this.state.data.answer === this.state.formData.userAnswer) {
+        if (this.state.data[this.state.choice].answer === this.state.formData.userAnswer) {
 
             this.setState((prevState) => {
-                return { score: prevState.score + prevState.data.value };
+                return { score: prevState.score + prevState.data[prevState.choice].value };
 
 
             })
@@ -62,14 +73,15 @@ class Jeopardy extends React.Component {
         }
         else {
             this.setState((prevState) => {
-                return { score: prevState.score - prevState.data.value };
+                return { score: prevState.score - prevState.data[prevState.choice].value };
 
 
             })
 
         }
         this.setState({
-            formData: {userAnswer: ''}
+            formData: {userAnswer: ''},
+            choice: null
         })
         this.getNewQuestion();
     }
@@ -92,6 +104,7 @@ class Jeopardy extends React.Component {
                 state={this.state}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
+                handleChoice={this.handleChoice}
             />)
     }
 }

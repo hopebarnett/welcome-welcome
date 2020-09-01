@@ -9,7 +9,7 @@ import Navigation from './components/navigation/Navigation';
 import NoMatch from './components/noMatch/NoMatch';
 import TestFetch from './components/testFetch/TestFetch';
 import Jeopardy from './components/jeopardy/Jeopardy';
-import Display from './components/display/Display';
+
 
 
 function App() {
